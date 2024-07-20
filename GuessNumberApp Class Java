@@ -1,0 +1,66 @@
+import java.util.Scanner;
+
+public class GuessNumberApp {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        boolean playAgain = true;
+
+        while (playAgain) {
+            Game game = new Game();
+            game.displayWelcomeMessage();
+            game.generateNumberToBeGuessed();
+            game.displayPleaseGuessMessage();
+            
+            boolean guessedCorrectly = false;
+
+            while (!guessedCorrectly) {
+                int userGuess = scanner.nextInt();
+                game.makeGuess(userGuess);
+                if (game.isCorrectGuess()) {
+                    game.displayCorrectGuessMessage();
+                    displayCustomMessage(game.getCounter());
+                    guessedCorrectly = true;
+                } else {
+                    displayHintMessage(userGuess, game.getNumber());
+                    game.displayGuessAgainMessage();
+                }
+            }
+
+            System.out.print("Try again? (y/n): ");
+            String response = scanner.next();
+            if (response.equalsIgnoreCase("n")) {
+                playAgain = false;
+            }
+        }
+
+        scanner.close();
+        System.out.println("Bye - Come back soon!");
+    }
+
+    private static void displayHintMessage(int userGuess, int actualNumber) {
+        int difference = Math.abs(userGuess - actualNumber);
+        if (userGuess > actualNumber) {
+            if (difference > 10) {
+                System.out.println("Way too high! Guess again.");
+            } else {
+                System.out.println("Too high! Guess again.");
+            }
+        } else {
+            if (difference > 10) {
+                System.out.println("Way too low! Guess again.");
+            } else {
+                System.out.println("Too low! Guess again.");
+            }
+        }
+    }
+
+    private static void displayCustomMessage(int counter) {
+        if (counter <= 3) {
+            System.out.println("Great work! You are a mathematical wizard.");
+        } else if (counter <= 7) {
+            System.out.println("Not too bad. You've got some potential.");
+        } else {
+            System.out.println("What took you so long.");
+        }
+    }
+}
