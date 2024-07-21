@@ -113,3 +113,23 @@ public class Game {
     }
 }
 
+Welcome to the Guessing Game!
+Please guess a number between 1 and 100:
+Enter your guess: 50
+Way too high! Guess again.
+Enter your guess: 25
+Too high! Guess again.
+Enter your guess: 12
+Too low! Guess again.
+Enter your guess: 20
+Too high! Guess again.
+Enter your guess: 18
+Too high! Guess again.
+Enter your guess: 17
+Too high! Guess again.
+Enter your guess: 16
+Too high! Guess again.
+Enter your guess: 15
+Congratulations! You guessed the correct number.
+Not too bad! You've got some potential.
+Do you want to play again? (y/n): 
