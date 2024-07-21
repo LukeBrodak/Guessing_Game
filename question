@@ -1,0 +1,115 @@
+can you help me figure out why my program is printing the performanceMessage twice, and one is incorrect? 
+
+program: 
+package guessingGame;
+
+import java.util.Scanner;
+
+public class GuessNumberApp {
+	public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        Game game = new Game();
+        game.displayWelcomeMessage();
+
+        String playAgain;
+        do {
+            game.generateNumberToBeGuessed();
+            game.displayPleaseGuessMessage();
+
+            boolean correctGuess = false;
+            while (!correctGuess) {
+                System.out.print("Enter your guess: ");
+                int guess = scanner.nextInt();
+                game.makeGuess(guess);
+                correctGuess = game.isCorrectGuess();
+                if (correctGuess) {
+                    game.displayCorrectGuessMessage();
+                    game.displayPerformanceMessage();
+                } else {
+                    game.displayGuessAgainMessage();
+                }
+            }
+
+            System.out.print("Do you want to play again? (y/n): ");
+            playAgain = scanner.next();
+        } while (playAgain.equalsIgnoreCase("y"));
+
+        scanner.close();
+    }
+}
+
+Game class:
+
+package guessingGame;
+import java.util.Random;
+
+public class Game {
+
+ 	private int number;
+    private int guessNumber;
+    private int counter;
+
+    public Game() {
+        generateNumberToBeGuessed();
+        counter = 0;
+    }
+
+    public void generateNumberToBeGuessed() {
+        Random rand = new Random();
+        number = rand.nextInt(100) + 1;
+    }
+
+    public void makeGuess(int guessNumber) {
+        this.guessNumber = guessNumber;
+
+    }
+
+    public boolean isCorrectGuess() {
+        return guessNumber == number;
+    }
+
+    public void displayWelcomeMessage() {
+        System.out.println("Welcome to the Guessing Game!");
+    }
+
+    public void displayPleaseGuessMessage() {
+        System.out.println("Please guess a number between 1 and 100:");
+    }
+
+    public void displayCorrectGuessMessage() {
+        System.out.println("Congratulations! You guessed the correct number.");
+        displayPerformanceMessage();  
+        counter = 0;
+
+    }
+
+    public void displayGuessAgainMessage() {
+        if (guessNumber > number + 10) {
+            System.out.println("Way too high! Guess again.");
+            counter = counter + 1;
+        } else if (guessNumber > number) {
+            System.out.println("Too high! Guess again.");
+            counter = counter + 1;
+        } else if (guessNumber < number - 10) {
+            System.out.println("Way too low! Guess again.");
+            counter = counter + 1;
+        } else {
+            System.out.println("Too low! Guess again.");
+            counter = counter + 1;
+        }
+        System.out.printf(counter + "\n");
+    }
+
+    public void displayPerformanceMessage() {
+        if (counter <= 3) {
+            System.out.println("Great work! You are a mathematical wizard.");
+            
+        } else if (counter <= 7) {
+            System.out.println("Not too bad! You've got some potential.");
+            
+        } else {
+            System.out.println("What took you so long?");
+        }
+    }
+}
+
